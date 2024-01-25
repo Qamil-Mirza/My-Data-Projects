@@ -86,6 +86,8 @@ with col_5:
     st.write(f"{most_ind_imp_school}")
     st.write(f"Score: {most_ind_imp_score}")
 
+st.divider()
+
 st.header(f'Overall Top 10 Universities In The World In {year}')
 def top_ten_tbl(year=year):
     sorted_by_year = world_uni_df[world_uni_df['Year'] == year]
@@ -94,3 +96,39 @@ def top_ten_tbl(year=year):
     return top_ten_uni[['Name', 'Overall Score']]
 
 st.write(top_ten_tbl())
+
+st.divider()
+
+st.header(f'Trend In Overall Scores')
+uni_names_array = world_uni_df.Name.unique()
+uni_selection = st.selectbox(label='University', options=uni_names_array)
+
+def uni_ovr_score_trend(uni=uni_selection):
+    # Filter by specified Uni
+    filter_by_uni = world_uni_df[world_uni_df['Name'] == uni]
+    year = filter_by_uni['Year']
+
+    # Get scores
+    ovr_score = filter_by_uni['Overall Score']
+    teach_score = filter_by_uni['Teaching']
+    res_env_score = filter_by_uni['Research Environment']
+    res_qual_score = filter_by_uni['Research Quality']
+    ind_impact_score = filter_by_uni['Industry Impact']
+
+    # Plot
+    plt.plot(year, ovr_score, label='Overall Score')
+    plt.plot(year, teach_score, label='Teaching')
+    plt.plot(year, res_env_score, label='Research Environment')
+    plt.plot(year, res_qual_score, label='Research Quality')
+    plt.plot(year, ind_impact_score, label='Industry Impact')
+    
+    # plot customizations
+    plt.title(f"Trend In Scores For {uni}")
+    plt.ylabel("Score (out of 100)")
+    plt.xlabel("Year")
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid()
+
+    return plt.gcf()
+
+st.pyplot(uni_ovr_score_trend())
