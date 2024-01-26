@@ -12,7 +12,7 @@ world_uni_df = pd.read_csv('./world-uni-rankings.csv', encoding='latin1')
 
 st.title('🎓World Universities Dashboard')
 
-year = st.slider('Year Selected', 2016, 2024)
+year = st.slider('Year Selected', 2016, 2024, key='summary')
 
 col_1, col_2, col_3, col_4, col_5 = st.columns(5, gap='large')
 
@@ -88,8 +88,10 @@ with col_5:
 
 st.divider()
 
-st.header(f'Overall Top 10 Universities In The World In {year}')
-def top_ten_tbl(year=year):
+top_ten_year = st.slider('Year Selected', 2016, 2024, key='top-ten-year')
+
+st.header(f'Overall Top 10 Universities In The World In {top_ten_year}')
+def top_ten_tbl(year=top_ten_year):
     sorted_by_year = world_uni_df[world_uni_df['Year'] == year]
     sort_desc = sorted_by_year.sort_values('Overall Score', ascending=False)
     top_ten_uni = sort_desc[:10].reset_index(drop=True).set_index('Rank')
@@ -101,7 +103,7 @@ st.divider()
 
 st.header(f'Trend In Overall Scores')
 uni_names_array = world_uni_df.Name.unique()
-uni_selection = st.selectbox(label='University Selected', options=uni_names_array)
+uni_selection = st.selectbox(label='University Selected', options=uni_names_array, key='top-ten-tbl')
 
 def uni_ovr_score_trend(uni=uni_selection):
     # Filter by specified Uni
@@ -133,3 +135,46 @@ def uni_ovr_score_trend(uni=uni_selection):
     return plt.gcf()
 
 st.pyplot(uni_ovr_score_trend())
+
+st.divider()
+
+st.header('University Student And Staff Population')
+
+pie_col_1, pie_col_2 = st.columns(2)
+
+with pie_col_1:
+    pie_year = st.slider('Year Selected', 2016, 2024, key='pie-chart-year')
+
+with pie_col_2:
+    pie_uni = st.selectbox(label='University Selected', options=uni_names_array, key='pie-chart-uni')
+
+# Feature engineering to get student and staff population
+def get_staff_pop():
+    staff_pop_df = world_uni_df
+    staff_pop_df['Staff Population'] = world_uni_df['Student Population'] * (1/world_uni_df['Students to Staff Ratio'])
+    return staff_pop_df
+
+staff_pop_df = get_staff_pop()
+
+def pie_chart(uni=pie_uni, year=pie_year):
+    # Data wrangling
+    data = []
+    filtered_data = staff_pop_df[(staff_pop_df['Year'] == year) & (staff_pop_df['Name'] == uni)]
+    student_pop = filtered_data['Student Population'].iloc[0]
+    staff_pop = filtered_data['Staff Population'].iloc[0]
+    student_ratio = student_pop / (student_pop + staff_pop)
+    staff_ratio = staff_pop / (student_pop + staff_pop)
+    data.append(round(student_ratio, 2))
+    data.append(round(staff_ratio, 2))
+
+    # Initialize figure
+    fig, ax = plt.subplots(figsize=(7,3))
+    ax.pie(data, labels=['Student', 'Staff'], autopct='%1.1f%%', colors=['#003262', '#C4820E'], textprops=dict(color='w', weight='bold', size=10))
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    ax.set_title(f'{year} Student & Staff Population Percentage For {uni}')
+    
+    return fig
+
+# Display the plot in Streamlit
+st.pyplot(pie_chart())
+    

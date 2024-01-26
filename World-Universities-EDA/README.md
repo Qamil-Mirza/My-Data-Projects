@@ -3,8 +3,11 @@ This project utilizes that dataset from kaggle which if you'd like you can acces
 
 Note that this is still a work in progress and I'd appreciate any feedback for improvement!
 
+issues:
+- International Outlook Factor Not Visualized! -> could lead to misrepresentation of data
+
+
 Some things I want to implement:
-- Lineplot depicting the trend in different scores for a specified university from 2016 to 2024
 - Correlation plots between certain factors and the Universities ranking
-- Schools with high gender disparity
+- Schools with high gender disparity: Sequential Bar Chart showing Female to Male Ratio 
 - Does high student:staff ratio contribute to poor teaching scores
