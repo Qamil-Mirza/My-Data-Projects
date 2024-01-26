@@ -4,7 +4,7 @@ This project utilizes that dataset from kaggle which if you'd like you can acces
 Note that this is still a work in progress and I'd appreciate any feedback for improvement!
 
 issues:
-- International Outlook Factor Not Visualized! -> could lead to misrepresentation of data
+None at the moment
 
 
 Some things I want to implement:

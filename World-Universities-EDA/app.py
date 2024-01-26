@@ -14,7 +14,7 @@ st.title('🎓World Universities Dashboard')
 
 year = st.slider('Year Selected', 2016, 2024, key='summary')
 
-col_1, col_2, col_3, col_4, col_5 = st.columns(5, gap='large')
+col_1, col_2, col_3, col_4, col_5, col_6 = st.columns(6, gap='large')
 
 with col_1:
     st.header('Best Overall Score')
@@ -86,6 +86,20 @@ with col_5:
     st.write(f"{most_ind_imp_school}")
     st.write(f"Score: {most_ind_imp_score}")
 
+with col_6:
+    st.header('Best International Outlook')
+    def best_international_outlook(year=year):
+        sorted_by_year = world_uni_df[world_uni_df['Year'] == year]
+        sort_desc = sorted_by_year.sort_values('International Outlook', ascending=False)
+        school_name = sort_desc['Name'].iloc[0]
+        score = sort_desc['International Outlook'].iloc[0]
+        return school_name, round(score,1)
+    
+    best_int_out_school, most_int_out_score = best_international_outlook()
+
+    st.write(f"{best_int_out_school}")
+    st.write(f"Score: {most_int_out_score}")
+
 st.divider()
 
 top_ten_year = st.slider('Year Selected', 2016, 2024, key='top-ten-year')
@@ -116,6 +130,7 @@ def uni_ovr_score_trend(uni=uni_selection):
     res_env_score = filter_by_uni['Research Environment']
     res_qual_score = filter_by_uni['Research Quality']
     ind_impact_score = filter_by_uni['Industry Impact']
+    int_out_score = filter_by_uni['International Outlook']
 
     # Plot
     plt.figure(figsize=(10,6))
@@ -124,6 +139,7 @@ def uni_ovr_score_trend(uni=uni_selection):
     plt.plot(year, res_env_score, label='Research Environment')
     plt.plot(year, res_qual_score, label='Research Quality')
     plt.plot(year, ind_impact_score, label='Industry Impact')
+    plt.plot(year, int_out_score, label='International Outlook')
     
     # plot customizations
     plt.title(f"Trend In Scores For {uni}")
