@@ -11,3 +11,4 @@ Some things I want to implement:
 1. Correlation plots between certain factors and the Universities ranking
 2. Schools with high gender disparity: Sequential Bar Chart showing Female to Male Ratio 
 3. Investigate how research environment correlates to the 
+4. Add lookup to check uni rank specified by user
