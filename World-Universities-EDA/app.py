@@ -12,7 +12,7 @@ world_uni_df = pd.read_csv('./world-uni-rankings.csv', encoding='latin1')
 
 st.title('🎓World Universities Dashboard')
 
-year = st.slider('Year', 2016, 2024)
+year = st.slider('Year Selected', 2016, 2024)
 
 col_1, col_2, col_3, col_4, col_5 = st.columns(5, gap='large')
 
@@ -101,7 +101,7 @@ st.divider()
 
 st.header(f'Trend In Overall Scores')
 uni_names_array = world_uni_df.Name.unique()
-uni_selection = st.selectbox(label='University', options=uni_names_array)
+uni_selection = st.selectbox(label='University Selected', options=uni_names_array)
 
 def uni_ovr_score_trend(uni=uni_selection):
     # Filter by specified Uni
@@ -116,6 +116,7 @@ def uni_ovr_score_trend(uni=uni_selection):
     ind_impact_score = filter_by_uni['Industry Impact']
 
     # Plot
+    plt.figure(figsize=(10,6))
     plt.plot(year, ovr_score, label='Overall Score')
     plt.plot(year, teach_score, label='Teaching')
     plt.plot(year, res_env_score, label='Research Environment')
