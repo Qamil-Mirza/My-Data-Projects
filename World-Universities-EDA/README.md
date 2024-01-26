@@ -8,6 +8,6 @@ None at the moment
 
 
 Some things I want to implement:
-- Correlation plots between certain factors and the Universities ranking
-- Schools with high gender disparity: Sequential Bar Chart showing Female to Male Ratio 
-- Does high student:staff ratio contribute to poor teaching scores
+1. Correlation plots between certain factors and the Universities ranking
+2. Schools with high gender disparity: Sequential Bar Chart showing Female to Male Ratio 
+3. Investigate how research environment correlates to the 
