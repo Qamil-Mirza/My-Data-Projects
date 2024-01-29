@@ -6,10 +6,8 @@ import streamlit as st
 import sys
 import path
 
-dir = path.Path(__file__).abspath()
-sys.path.append(dir.parent.parent)
 
-file_path = './world-uni-rankings.csv'
+file_path = 'https://raw.githubusercontent.com/Qamil-Mirza/My-Data-Projects/main/World-Universities-EDA/world-uni-rankings.csv'
 
 
 # Set up page configurations
