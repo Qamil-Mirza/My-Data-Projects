@@ -3,12 +3,19 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
+import sys
+import path
+
+dir = path.Path(__file__).abspath()
+sys.path.append(dir.parent.parent)
+
+file_path = './world-uni-rankings.csv'
 
 
 # Set up page configurations
 st.set_page_config(page_title='World Universities Interactive Dashboard', page_icon='🎓', layout='wide')
 
-world_uni_df = pd.read_csv('./world-uni-rankings.csv', encoding='latin1')
+world_uni_df = pd.read_csv(file_path, encoding='latin1')
 
 st.title('🎓World Universities Dashboard')
 
