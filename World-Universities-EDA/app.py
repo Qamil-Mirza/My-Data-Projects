@@ -193,4 +193,66 @@ def pie_chart(uni=pie_uni, year=pie_year):
 
 # Display the plot in Streamlit
 st.pyplot(pie_chart())
+
+st.divider()
+
+st.header("Gender Ratio Over Time")
+
+gender_uni = st.selectbox(label='University Selected', options=uni_names_array, key='gender-uni')
+
+
+def get_female_male_pop_df():
+    male_female_pop_df = world_uni_df.copy()
+    boolean_mask = male_female_pop_df['Female to Male Ratio'].str.len() > 5
+    male_female_pop_df.loc[boolean_mask, 'Female to Male Ratio'] = male_female_pop_df.loc[boolean_mask, 'Female to Male Ratio'].str[:-3]
     
+    # Now we split the ratios into two columns
+    male_female_pop_df['Female Population Percentage'] = male_female_pop_df['Female to Male Ratio'].str[:2]
+    male_female_pop_df['Female Population Percentage'] = pd.to_numeric(male_female_pop_df['Female Population Percentage'],
+                                                                        errors='coerce').astype('Int64')
+    
+    male_female_pop_df['Male Population Percentage'] = male_female_pop_df['Female to Male Ratio'].str[3:]
+    male_female_pop_df['Male Population Percentage'] = pd.to_numeric(male_female_pop_df['Male Population Percentage'],
+                                                                        errors='coerce').astype('Int64')
+    
+    # drop the Female to Male Ratio column
+    male_female_pop_df.drop('Female to Male Ratio', inplace=True, axis=1)
+
+    # drop the rows with null values
+    male_female_pop_df.dropna(inplace=True)
+    return male_female_pop_df
+
+df_male_female = get_female_male_pop_df()
+
+# Create a function to plot the bar chart Over time
+def gender_ratio_over_time(uni=gender_uni):
+    plt.figure(figsize=(10,6))
+    filter_by_uni = df_male_female[df_male_female['Name'] == uni]
+
+    year = filter_by_uni['Year']
+    female = filter_by_uni['Female Population Percentage']
+    male = filter_by_uni['Male Population Percentage']
+
+    # initialize the plot
+    plt.figure(figsize=(10,6))
+    # calculate the width of each bar
+    bar_width = 0.35
+
+    # calculate the x positions for the bars
+    bar_positions_female = np.arange(len(year))
+    bar_positions_male = bar_positions_female + bar_width
+
+    # plot the female and male population percentage side by side
+    plt.bar(year, female, width=bar_width, color='pink', label='Female')
+    plt.bar(year+bar_width, male, width=bar_width, color='blue', label='Male')
+
+    # plot customizations
+    plt.title(f'Distribution Of Gender Ratio Over Time: {uni}')
+    plt.xlabel('Year')
+    plt.xticks(year+bar_width/2, year)
+    plt.ylabel('Percentage')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid()
+    return plt.gcf()
+
+st.pyplot(gender_ratio_over_time())
