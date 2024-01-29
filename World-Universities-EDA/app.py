@@ -263,3 +263,5 @@ def gender_ratio_over_time(uni=gender_uni):
     return plt.gcf()
 
 st.pyplot(gender_ratio_over_time())
+
+st.markdown("If graph is not showing, it means the data isn't available for that university. Please select another university.")
