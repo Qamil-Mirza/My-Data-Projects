@@ -3,8 +3,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
-import sys
-import path
 
 
 file_path = 'https://raw.githubusercontent.com/Qamil-Mirza/My-Data-Projects/main/World-Universities-EDA/world-uni-rankings.csv'
@@ -204,6 +202,7 @@ st.divider()
 st.header("Gender Ratio Over Time")
 
 gender_uni = st.selectbox(label='University Selected', options=uni_names_array, key='gender-uni')
+st.markdown("If graph is not showing, it means the data isn't available for that university. Please select another university.")
 
 
 def get_female_male_pop_df():
@@ -261,5 +260,3 @@ def gender_ratio_over_time(uni=gender_uni):
     return plt.gcf()
 
 st.pyplot(gender_ratio_over_time())
-
-st.markdown("If graph is not showing, it means the data isn't available for that university. Please select another university.")
