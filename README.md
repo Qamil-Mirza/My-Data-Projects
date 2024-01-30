@@ -1,9 +1,6 @@
 # My-Data-Projects
-This is a compilation of some of the data science based projects that I will continually carry out to improve my technical skills and map my learning journey. Projects will range anywhere between Exploratory Data Analysis to ML/DL implementations.
-
-I will start with these jupyter notebooks which I acknowledge the modularity isn't quite there. But the purpose of the first few projects is to get a refresher on machine learning in various fields. After that, I'll work on developing a deployable project which focuses on code readability and modularity!
+A compilation of my Data/AI projects as I learn and improve as an aspiring machine learning engineer. Feel free to take a look and if you have feedback for me, feel free to reach out to me at qamilmirza@gmail.com as I'd love to hear your thoughts. 
 
 
 Current Tasks:
-1. Complete code for World Universities EDA
-2. Deploy World Universities Website on streamlit
+YET TO BE SPECIFIED
