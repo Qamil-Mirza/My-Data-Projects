@@ -14,6 +14,7 @@ st.set_page_config(page_title='World Universities Interactive Dashboard', page_i
 world_uni_df = pd.read_csv(file_path, encoding='latin1')
 
 st.title('🎓World Universities Dashboard')
+st.markdown('This dashboard is an interactive tool to explore the world university rankings data. The data is originally from Times Higher Education World University Rankings and was scraped by Raymond Too on Kaggle. Here is a link to the original [Times Higher Education data](https://www.timeshighereducation.com/world-university-rankings/2024/world-ranking#). I would also like to credit Raymond for the dataset which can be found [here](https://www.kaggle.com/datasets/raymondtoo/the-world-university-rankings-2016-2024).')
 
 year = st.slider('Year Selected', 2016, 2024, key='summary')
 
